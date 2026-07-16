@@ -1,0 +1,86 @@
+{
+  "summary": {
+    "month": "May 2026",
+    "total_releases": 9,
+    "total_gross_collection": 1782,
+    "average_gross_collection": 198.0,
+    "highest_grossing_film": "Raja Shivaji",
+    "highest_gross": 296,
+    "best_opening_weekend_film": "The Mandalorian and Grogu",
+    "best_opening_weekend": 49
+  },
+  "movies": [
+    {
+      "film": "Raja Shivaji",
+      "language": "Hindi, Kannada, Malayalam, Marathi, Tamil, Telugu",
+      "release_date": "2026-05-01",
+      "gross_collection": 296,
+      "opening_weekend": 28,
+      "poster": "https://d1uxwq81qdmaga.cloudfront.net/movies/poster/414853.jpg"
+    },
+    {
+      "film": "Patriot",
+      "language": "Malayalam",
+      "release_date": "2026-05-01",
+      "gross_collection": 269,
+      "opening_weekend": 32,
+      "poster": "https://d1uxwq81qdmaga.cloudfront.net/movies/poster/437220.jpg"
+    },
+    {
+      "film": "Daadi Ki Shaadi",
+      "language": "Hindi",
+      "release_date": "2026-05-08",
+      "gross_collection": 247,
+      "opening_weekend": 25,
+      "poster": "https://d1uxwq81qdmaga.cloudfront.net/movies/poster/442786.jpg"
+    },
+    {
+      "film": "The Devil Wears Prada 2",
+      "language": "English",
+      "release_date": "2026-05-01",
+      "gross_collection": 239,
+      "opening_weekend": 13,
+      "poster": "https://d1uxwq81qdmaga.cloudfront.net/movies/poster/440429.jpg"
+    },
+    {
+      "film": "Ek Din",
+      "language": "Hindi",
+      "release_date": "2026-05-01",
+      "gross_collection": 233,
+      "opening_weekend": 14,
+      "poster": "https://d1uxwq81qdmaga.cloudfront.net/movies/poster/441049.jpg"
+    },
+    {
+      "film": "Pati Patni aur Woh Do",
+      "language": "Hindi",
+      "release_date": "2026-05-15",
+      "gross_collection": 190,
+      "opening_weekend": 37,
+      "poster": null
+    },
+    {
+      "film": "Chand Mera Dil",
+      "language": "Hindi",
+      "release_date": "2026-05-22",
+      "gross_collection": 180,
+      "opening_weekend": 18,
+      "poster": "https://d1uxwq81qdmaga.cloudfront.net/movies/poster/440406.jpg"
+    },
+    {
+      "film": "The Mandalorian and Grogu",
+      "language": "English",
+      "release_date": "2026-05-22",
+      "gross_collection": 88,
+      "opening_weekend": 49,
+      "poster": "https://d1uxwq81qdmaga.cloudfront.net/movies/poster/409434.jpg"
+    },
+    {
+      "film": "Drishyam 3",
+      "language": "Malayalam",
+      "release_date": "2026-05-21",
+      "gross_collection": 40,
+      "opening_weekend": 9,
+      "poster": "https://d1uxwq81qdmaga.cloudfront.net/movies/poster/442162.jpg"
+    }
+  ]
+}
