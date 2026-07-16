@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Box Office Report</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(180deg,#f8fafc,#f1f5f9);
+  color: #0f172a;
+  padding: 24px 20px;
+  min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    width: 95%;
+    margin: 0 auto;
+}
+
+/* ── HEADER ── */
+.header {
+ display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  margin-bottom: 30px;
+}
+.header-left h1 { font-size: 30px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+.header-left p  { font-size: 13px; color: #64748b; font-weight: 500; }
+
+.date-pill {
+  display: flex; align-items: center; gap: 7px;
+  background: #fff; border: 1.5px solid #e2e8f0; border-radius: 10px;
+  padding: 7px 13px; font-size: 13px; font-weight: 600; color: #0f172a; cursor: pointer;
+}
+
+/* ── SUMMARY CARDS ── */
+.summary {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px;
+}
+.card {
+  background: #fff; border-radius: 16px; padding: 14px 16px;
+   font-size: 24px;
+  box-shadow: 0 2px 10px rgba(15,23,42,.06);
+}
+.card-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; margin-bottom: 12px;
+}
+.icon-pink   { background: #fff0f5; }
+.icon-green  { background: #e8faf0; }
+.icon-orange { background: #fff4ec; }
+.icon-purple { background: #f3eeff; }
+
+.card-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; margin-bottom: 7px;
+}
+.label-pink   { color: #f43f87; }
+.label-green  { color: #16a34a; }
+.label-orange { color: #ea580c; }
+.label-purple { color: #7c3aed; }
+
+.card-value { font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+.val-pink   { color: #f43f87; }
+.val-green  { color: #16a34a; }
+.val-orange { color: #ea580c; }
+.val-purple { color: #7c3aed; font-size: 17px; line-height: 1.35; }
+
+.card-sub {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 11.5px; font-weight: 600; margin-top: 2px;
+}
+
+/* ── TOP PERFORMERS ── */
+.top-performers {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px;
+}
+.performer-card {
+  background: #fff; border-radius: 16px; padding: 18px 20px;
+  box-shadow: 0 2px 10px rgba(15,23,42,.06);
+  display: flex; flex-direction: column; gap: 4px;
+  position: relative; overflow: hidden; min-height: 90px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+.performer-label {
+  font-size: 16px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.perf-gold { color: #b7860b; }
+.perf-red  { color: #ef4444; }
+.performer-name { font-size: 15px; font-weight: 700; color: #0f172a; }
+.performer-value { font-size: 24px; font-weight: 800; }
+.perf-val-gold { color: #d4a017; }
+.perf-val-red  { color: #ef4444; }
+
+.sparkline { position: absolute; bottom: 0; right: 0; width: 155px; height: 68px; }
+
+/* ── MOVIES ── */
+.section-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+}
+.section-title { font-size: 23px; font-weight: 800; color: #0f172a; }
+.view-all { font-size: 12.5px; font-weight: 700; color: #0f172a; text-decoration: none; }
+
+.movie-grid { display: flex; flex-direction: column; gap: 10px; }
+
+.movie-card {
+  display: grid;
+  grid-template-columns: 170px minmax(320px, 2fr) 1fr 1fr;
+  align-items: center;
+  background: #fff; border-radius: 16px;
+  padding: 12px 18px 12px 12px;
+  box-shadow: 0 2px 10px rgba(15,23,42,.06);
+  min-height: 95px;
+  
+}
+
+.movie-card img {
+  
+    width: 200px;
+  height: 170px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+
+.movie-info {
+  padding-left: 90px;
+  padding-right: 20px;
+}
+
+.movie-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.movie-info h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+.movie-info p  { font-size: 12px; color: #64748b; margin-bottom: 3px; }
+.movie-info p strong { color: #374151; font-weight: 600; }
+
+.stat-box {
+  border-left: 1px solid #f1f5f9;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 0 12px; height: 100%;
+}
+.stat-icon {
+  width: 28px; height: 28px; border-radius: 50%; background: #eff6ff;
+  display: flex; align-items: center; justify-content: center; font-size: 13px;
+}
+.stat-value {
+  font-size: 20px; font-weight: 800; color: #3b82f6; line-height: 1;
+}
+.stat-label {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.7px;
+  text-transform: uppercase; color: #94a3b8; text-align: center;
+}
+
+@media print {
+
+  body {
+    background: white;
+  }
+
+  .movie-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    grid-template-columns: 120px 1fr 120px 120px !important;
+  }
+
+  .performer-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .movie-card img {
+      width: 100px !important;
+      height: 140px !important;
+  }
+
+  .card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .movie-grid {
+    page-break-inside: auto;
+  }
+
+  @page {
+    size: A4;
+    margin: 12mm;
+}
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .movie-card,
+    .card,
+    .performer-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+}
+
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>BOX OFFICE MONTHLY REPORT</h1>
+      <p>May 2026</p>
+    </div>
+    
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <div class="summary">
+
+    <div class="card">
+      <div class="card-icon icon-pink">📅</div>
+      <div class="card-label label-pink">Total Releases</div>
+      <div class="card-value val-pink" id="total-releases">{{TOTAL_RELEASES}}</div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon icon-green">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v2m0 8v2m-4-6h2m4 0h2M9.5 9.5l1.5 1.5m2 2 1.5 1.5M9.5 14.5l1.5-1.5m2-2 1.5-1.5"/></svg>
+      </div>
+      <div class="card-label label-green">Total Gross</div>
+      <div class="card-value val-green" id="total-gross">₹{{TOTAL_GROSS}}Cr</div>
+      
+    </div>
+
+    <div class="card">
+      <div class="card-icon icon-orange">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      </div>
+      <div class="card-label label-orange">Average Gross</div>
+      <div class="card-value val-orange" id="average-gross">₹{{AVERAGE_GROSS}} Cr</div>
+    
+    </div>
+
+    <div class="card">
+      <div class="card-icon icon-purple" style="font-size:20px;">☆</div>
+      <div class="card-label label-purple">Top Film</div>
+      <div class="card-value val-purple" id="top-film">{{TOP_FILM}}</div>
+    </div>
+
+  </div>
+
+  <!-- TOP PERFORMERS -->
+  <div class="top-performers">
+
+    <div class="performer-card">
+      <div class="performer-label perf-gold">🏆 &nbsp;Highest Grossing Film</div>
+      <div class="performer-name" id="highest-film-name">{{HIGHEST_GROSS_FILM}}</div>
+<div class="performer-value perf-val-gold" id="highest-film-gross">₹{{HIGHEST_GROSS}} Cr</div>
+      <svg class="sparkline" viewBox="0 0 155 68" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f6c94e" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#f6c94e" stop-opacity="0.02"/>
+          </linearGradient>
+        </defs>
+        <path d="M0 58 C25 53,45 44,65 38 C85 32,105 24,125 15 C138 9,148 6,155 4"
+              fill="none" stroke="#d4a017" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M0 58 C25 53,45 44,65 38 C85 32,105 24,125 15 C138 9,148 6,155 4 L155 68 L0 68 Z"
+              fill="url(#goldGrad)"/>
+        <circle cx="155" cy="4" r="5" fill="#d4a017"/>
+      </svg>
+    </div>
+
+    <div class="performer-card">
+      <div class="performer-label perf-red">🔥 &nbsp;Best Opening Weekend</div>
+     <div class="performer-name" id="best-opening-film">{{BEST_OPENING_FILM}}</div>
+<div class="performer-value perf-val-red" id="best-opening-value">₹{{BEST_OPENING}} Cr</div>
+      <svg class="sparkline" viewBox="0 0 155 68" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ef4444" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#ef4444" stop-opacity="0.02"/>
+          </linearGradient>
+        </defs>
+        <path d="M0 56 C22 50,42 46,62 40 C82 34,102 26,122 17 C138 10,148 7,155 5"
+              fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M0 56 C22 50,42 46,62 40 C82 34,102 26,122 17 C138 10,148 7,155 5 L155 68 L0 68 Z"
+              fill="url(#redGrad)"/>
+        <circle cx="155" cy="5" r="5" fill="#ef4444"/>
+      </svg>
+    </div>
+
+  </div>
+
+  <!-- MOVIES SECTION -->
+  <div class="section-header">
+    <div class="section-title">MOVIES</div>
+
+  </div>
+
+  <div class="movie-grid">
+    {{MOVIE_CARDS}}
+</div>
+
+  
+</div>
+
+</body>
+</html>

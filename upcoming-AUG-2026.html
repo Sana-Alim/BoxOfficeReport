@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Box Office Report</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(180deg,#f8fafc,#f1f5f9);
+  color: #0f172a;
+  padding: 24px 20px;
+  min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    width: 95%;
+    margin: 0 auto;
+}
+
+/* ── HEADER ── */
+.header {
+ display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  margin-bottom: 30px;
+}
+.header-left h1 { font-size: 30px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+.header-left p  { font-size: 13px; color: #64748b; font-weight: 500; }
+
+.date-pill {
+  display: flex; align-items: center; gap: 7px;
+  background: #fff; border: 1.5px solid #e2e8f0; border-radius: 10px;
+  padding: 7px 13px; font-size: 13px; font-weight: 600; color: #0f172a; cursor: pointer;
+}
+
+/* ── SUMMARY CARDS ── */
+.summary {
+    display: grid;
+    grid-template-columns: repeat(2, 290px);
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+.card {
+  background: #fff; border-radius: 16px; 
+   font-size: 24px;
+  box-shadow: 0 2px 10px rgba(15,23,42,.06);
+   min-height: 90px;
+    padding: 12px;
+}
+.card-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; margin-bottom: 12px;
+  flex-direction: column;
+   margin: 0 auto 15px;
+}
+.icon-pink   { background: #fff0f5; }
+.icon-green  { background: #e8faf0; }
+.icon-orange { background: #fff4ec; }
+.icon-purple { background: #f3eeff; }
+
+.card-label {
+  font-size: 12px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; margin-bottom: 7px;
+  text-align: center;
+}
+.label-pink   { color: #f43f87; }
+.label-green  { color: #16a34a; }
+.label-orange { color: #ea580c; }
+.label-purple { color: #7c3aed; }
+
+.card-value { font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 6px;text-align: center; }
+.val-pink   { color: #f43f87; }
+.val-green  { color: #16a34a; }
+.val-orange { color: #ea580c; }
+.val-purple { color: #7c3aed; font-size: 17px; line-height: 1.35; }
+
+.card-sub {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 11.5px; font-weight: 600; margin-top: 2px;
+}
+
+
+/* ── MOVIES ── */
+.section-header {
+  display: flex;   justify-content: center; align-items: center; margin-bottom: 15px; text-align: center;
+}
+.section-title { margin: 0;font-size: 35px; font-weight: 800; color: #0f172a; text-align: center;display: inline-block; }
+.view-all { font-size: 12.5px; font-weight: 700; color: #0f172a; text-decoration: none; }
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(450px, 1fr));
+    gap: 10px;
+     align-items: start;
+}
+
+.movie-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(15,23,42,.06);
+  height: 210px;
+   
+  
+}
+
+.movie-card img {
+    width: 130px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.movie-info {
+    padding-left: 10px;
+    padding-right: 0;
+
+    flex: 1;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.movie-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+    transition: .25s;
+}
+
+.movie-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+.date-pill {
+    background: #eef2ff;
+    color: #4f46e5;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+.genre-chip {
+    display: inline-block;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 6px;
+    margin-top: 4px;
+}
+
+
+.anticipation {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.high {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.low {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.movie-info h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+.movie-info p  { font-size: 14px; color: #64748b; margin-bottom: 3px; margin: 2px 0;
+    line-height: 1.15;
+}
+ 
+
+
+.movie-info p strong { color: #374151; font-weight: 600; }
+
+.stat-box {
+  border-left: 1px solid #f1f5f9;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 0 12px; height: 100%;
+}
+.stat-icon {
+  width: 28px; height: 28px; border-radius: 50%; background: #eff6ff;
+  display: flex; align-items: center; justify-content: center; font-size: 13px;
+}
+.stat-value {
+  font-size: 20px; font-weight: 800; color: #3b82f6; line-height: 1;
+}
+.stat-label {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.7px;
+  text-transform: uppercase; color: #94a3b8; text-align: center;
+}
+
+@media print {
+
+  body {
+    background: white;
+  }
+
+  .movie-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    grid-template-columns: 120px 1fr 120px 120px !important;
+  }
+
+  .performer-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .movie-card img {
+      width: 100px !important;
+      height: 140px !important;
+  }
+
+  .card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .movie-grid {
+    page-break-inside: auto;
+  }
+
+  @page {
+    size: A4;
+    margin: 12mm;
+}
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .movie-card,
+    .card,
+    .performer-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+}
+@media print {
+    body {
+        zoom: 75%;
+    }
+}
+
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>NEXT MONTH MOVIE RELEASE REPORT</h1>
+      <p>August 2026</p>
+    </div>
+    
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <div class="summary">
+
+    <div class="card">
+    <div class="card-icon icon-pink">🎬</div>
+    <div class="card-label label-pink">Upcoming Releases</div>
+    <div class="card-value val-pink">9</div>
+</div>
+
+<div class="card">
+    <div class="card-icon icon-purple">📅</div>
+    <div class="card-label label-purple">Month</div>
+    <div class="card-value val-purple">August 2026</div>
+</div>
+  
+  </div>
+
+
+
+  <!-- MOVIES SECTION -->
+  <div class="section-header">
+    <div class="section-title">MOVIES</div>
+
+  </div>
+
+  <div class="movie-grid">
+    
+    <div class="movie-card">
+        
+        <img src="https://d1uxwq81qdmaga.cloudfront.net/movies/poster/443540.jpg" alt="Prahaar - The Ujjwal Nikam Story">
+
+        <div class="movie-info">
+
+            <div class="movie-title">
+                Prahaar - The Ujjwal Nikam Story
+            </div>
+
+            <p>
+                <strong>Language:</strong>
+                Hindi
+            </p>
+
+            <p>
+    <strong>Release Date:</strong>
+    <span class="date-pill">
+        2026-08-07
+    </span>
+</p>
+            <p>
+                <strong>Lead Cast:</strong>
+                Wamiqa Gabbi, Rajkummar Rao, Lalit Prabhakar
+            </p>
+
+            <p>
+    <strong>Genre:</strong>
+    <span class="genre-chip">Biography</span><span class="genre-chip">Drama</span><span class="genre-chip">History</span>
+</p>
+
+            <p>
+    <strong>Anticipation Level:</strong>
+    <span class="anticipation high">
+        High
+    </span>
+</p>
+
+        </div>
+
+    </div>
+    
+    <div class="movie-card">
+        
+        <img src="https://d1uxwq81qdmaga.cloudfront.net/movies/poster/443544.jpg" alt="One Night Only">
+
+        <div class="movie-info">
+
+            <div class="movie-title">
+                One Night Only
+            </div>
+
+            <p>
+                <strong>Language:</strong>
+                English
+            </p>
+
+            <p>
+    <strong>Release Date:</strong>
+    <span class="date-pill">
+        2026-08-14
+    </span>
+</p>
+            <p>
+                <strong>Lead Cast:</strong>
+                Callum Turner, Monica Barbaro, Maya Hawke
+            </p>
+
+            <p>
+    <strong>Genre:</strong>
+    <span class="genre-chip">Comedy</span><span class="genre-chip">Drama</span><span class="genre-chip">Romance</span>
+</p>
+
+            <p>
+    <strong>Anticipation Level:</strong>
+    <span class="anticipation high">
+        High
+    </span>
+</p>
+
+        </div>
+
+    </div>
+    
+    <div class="movie-card">
+        
+        <img src="https://image.tmdb.org/t/p/original/cSnB0iHrneOG7Ku2RKXJq3pjRYm.jpg" alt="Awarapan 2">
+
+        <div class="movie-info">
+
+            <div class="movie-title">
+                Awarapan 2
+            </div>
+
+            <p>
+                <strong>Language:</strong>
+                Hindi
+            </p>
+
+            <p>
+    <strong>Release Date:</strong>
+    <span class="date-pill">
+        2026-08-14
+    </span>
+</p>
+            <p>
+                <strong>Lead Cast:</strong>
+                Disha Patani, Emraan Hashmi, Shabana Azmi
+            </p>
+
+            <p>
+    <strong>Genre:</strong>
+    <span class="genre-chip">Action</span><span class="genre-chip">Drama</span><span class="genre-chip">Romance</span><span class="genre-chip">Thriller</span>
+</p>
+
+            <p>
+    <strong>Anticipation Level:</strong>
+    <span class="anticipation high">
+        High
+    </span>
+</p>
+
+        </div>
+
+    </div>
+    
+    <div class="movie-card">
+        
+        <img src="https://m.media-amazon.com/images/M/MV5BMTk1OWE0ZjktYmFiNS00NjFlLTg4MjYtZTRhYWEyNjcyNDE4XkEyXkFqcGc@._V1_.jpg" alt="Batwara 1947">
+
+        <div class="movie-info">
+
+            <div class="movie-title">
+                Batwara 1947
+            </div>
+
+            <p>
+                <strong>Language:</strong>
+                Hindi
+            </p>
+
+            <p>
+    <strong>Release Date:</strong>
+    <span class="date-pill">
+        2026-08-14
+    </span>
+</p>
+            <p>
+                <strong>Lead Cast:</strong>
+                Sunny Deol, Preity  Zinta, Shabana Azmi
+            </p>
+
+            <p>
+    <strong>Genre:</strong>
+    <span class="genre-chip">Drama</span><span class="genre-chip">History</span><span class="genre-chip">War</span>
+</p>
+
+            <p>
+    <strong>Anticipation Level:</strong>
+    <span class="anticipation high">
+        High
+    </span>
+</p>
+
+        </div>
+
+    </div>
+    
+    <div class="movie-card">
+        
+        <img src="https://d1uxwq81qdmaga.cloudfront.net/movies/poster/443519.jpg" alt="Insidious: Out of the Further">
+
+        <div class="movie-info">
+
+            <div class="movie-title">
+                Insidious: Out of the Further
+            </div>
+
+            <p>
+                <strong>Language:</strong>
+                English
+            </p>
+
+            <p>
+    <strong>Release Date:</strong>
+    <span class="date-pill">
+        2026-08-19
+    </span>
+</p>
+            <p>
+                <strong>Lead Cast:</strong>
+                Lin Shaye, Sam Spruell, Brandon Perea
+            </p>
+
+            <p>
+    <strong>Genre:</strong>
+    <span class="genre-chip">Horror</span><span class="genre-chip">Mystery</span><span class="genre-chip">Thriller</span>
+</p>
+
+            <p>
+    <strong>Anticipation Level:</strong>
+    <span class="anticipation high">
+        High
+    </span>
+</p>
+
+        </div>
+
+    </div>
+    
+    <div class="movie-card">
+        
+        <img src="https://d1uxwq81qdmaga.cloudfront.net/movies/poster/443545.jpg" alt="The End of Oak Street">
+
+        <div class="movie-info">
+
+            <div class="movie-title">
+                The End of Oak Street
+            </div>
+
+            <p>
+                <strong>Language:</strong>
+                English
+            </p>
+
+            <p>
+    <strong>Release Date:</strong>
+    <span class="date-pill">
+        2026-08-21
+    </span>
+</p>
+            <p>
+                <strong>Lead Cast:</strong>
+                Anne Hathaway, Ewan McGregor, Pilot Bunch
+            </p>
+
+            <p>
+    <strong>Genre:</strong>
+    <span class="genre-chip">Action</span><span class="genre-chip">Adventure</span><span class="genre-chip">Mystery</span><span class="genre-chip">Sci-Fi</span><span class="genre-chip">Thriller</span>
+</p>
+
+            <p>
+    <strong>Anticipation Level:</strong>
+    <span class="anticipation high">
+        High
+    </span>
+</p>
+
+        </div>
+
+    </div>
+    
+    <div class="movie-card">
+        
+        <img src="https://d1uxwq81qdmaga.cloudfront.net/movies/poster/432815.jpg" alt="Mutiny">
+
+        <div class="movie-info">
+
+            <div class="movie-title">
+                Mutiny
+            </div>
+
+            <p>
+                <strong>Language:</strong>
+                English
+            </p>
+
+            <p>
+    <strong>Release Date:</strong>
+    <span class="date-pill">
+        2026-08-21
+    </span>
+</p>
+            <p>
+                <strong>Lead Cast:</strong>
+                Jason Statham, Annabelle Wallis, Adrian Lester
+            </p>
+
+            <p>
+    <strong>Genre:</strong>
+    <span class="genre-chip">Action</span><span class="genre-chip">Crime</span><span class="genre-chip">Thriller</span>
+</p>
+
+            <p>
+    <strong>Anticipation Level:</strong>
+    <span class="anticipation high">
+        High
+    </span>
+</p>
+
+        </div>
+
+    </div>
+    
+    <div class="movie-card">
+        
+        <img src="https://d1uxwq81qdmaga.cloudfront.net/movies/poster/383598.jpg" alt="Toxic">
+
+        <div class="movie-info">
+
+            <div class="movie-title">
+                Toxic
+            </div>
+
+            <p>
+                <strong>Language:</strong>
+                Kannada, English, Hindi, Malayalam, Telugu, Tamil
+            </p>
+
+            <p>
+    <strong>Release Date:</strong>
+    <span class="date-pill">
+        2026-08-26
+    </span>
+</p>
+            <p>
+                <strong>Lead Cast:</strong>
+                Yash, Kiara Advani, Darrell D'Silva
+            </p>
+
+            <p>
+    <strong>Genre:</strong>
+    <span class="genre-chip">Action</span><span class="genre-chip">Thriller</span>
+</p>
+
+            <p>
+    <strong>Anticipation Level:</strong>
+    <span class="anticipation high">
+        High
+    </span>
+</p>
+
+        </div>
+
+    </div>
+    
+    <div class="movie-card">
+        
+        <img src="https://d1uxwq81qdmaga.cloudfront.net/movies/poster/443541.jpg" alt="Eetha">
+
+        <div class="movie-info">
+
+            <div class="movie-title">
+                Eetha
+            </div>
+
+            <p>
+                <strong>Language:</strong>
+                Hindi
+            </p>
+
+            <p>
+    <strong>Release Date:</strong>
+    <span class="date-pill">
+        2026-08-28
+    </span>
+</p>
+            <p>
+                <strong>Lead Cast:</strong>
+                Shraddha Kapoor, Randeep Hooda, Anant Joshi
+            </p>
+
+            <p>
+    <strong>Genre:</strong>
+    <span class="genre-chip">Biography</span><span class="genre-chip">Drama</span><span class="genre-chip">Music</span>
+</p>
+
+            <p>
+    <strong>Anticipation Level:</strong>
+    <span class="anticipation high">
+        High
+    </span>
+</p>
+
+        </div>
+
+    </div>
+    
+</div>
+
+
+  
+</div>
+
+</body>
+</html>
